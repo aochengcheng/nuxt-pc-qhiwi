@@ -187,10 +187,6 @@
           <div class="PropertyMatching">
             <img src="~static/images/haiwaiHouse/AirConditioner.png" />
             <span class="MatTitl">空调设施</span>
-            <!-- <span
-              class="gouclass"
-              v-if="property.airConditioning&&property.airConditioning.SplitType"
-            >√</span>-->
             <span class="MatTcent">
               <i
                 class="gouclass"
@@ -332,21 +328,51 @@ import Price from "~/components/Price";
 import houseSwipe from "~/components/houseSwiper";
 import { SEOConfig } from "~/utils/config";
 import { fetch } from "~/plugins/axios/http.js";
-import {
-  fixedNav,
-  getModelHot,
-  setCountryMode,
-  clickRate,
-  phone
-} from "~/utils/mixins";
+import { fixedNav, getModelHot, clickRate, phone } from "~/utils/mixins";
 export default {
-  async asyncData(c) {
-    // let a = await fetch("/dhr/activity/news");
-    // console.log("房产详情 ::::::::::::::", c);
-    // console.log(a);
-  },
+  mixins: [fixedNav, getModelHot, clickRate, phone],
 
-  mixins: [fixedNav, getModelHot, setCountryMode, clickRate, phone],
+  async asyncData(ctx) {
+    const { ErrCode, Result: house_detail } = await fetch(
+      "/dhr/client/house/" + ctx.query.id
+    );
+
+    const { Result: res } = await fetch(`/dhr/client/house/list`, {
+      limit: 4,
+      page: 1
+    });
+
+    console.log("data:::::::", res);
+
+    if (ErrCode == "0000") {
+      console.log("house_detail::::::", house_detail);
+    }
+
+    let property = JSON.parse(house_detail.property);
+    let peripheral;
+    if (house_detail.peripheral) {
+      peripheral = JSON.parse(house_detail.peripheral);
+      console.log("peripheral：：：", peripheral);
+    }
+
+    return {
+      merchant_id: house_detail.merchant_id,
+      peripheral,
+      property,
+      like: res.data,
+      house_detail,
+      type: [
+        {
+          title: "海外房产",
+          path: "/house"
+        },
+        {
+          title: house_detail.title,
+          path: ""
+        }
+      ]
+    };
+  },
   data() {
     return {
       showt: false,
@@ -364,16 +390,16 @@ export default {
       ],
       top: 860, // 屏幕距离上面的距离
       paddingTop: 100,
-      type: [
-        {
-          title: "海外房产",
-          path: "/house"
-        },
-        {
-          title: "",
-          path: ""
-        }
-      ],
+      // type: [
+      //   {
+      //     title: "海外房产",
+      //     path: "/house"
+      //   },
+      //   {
+      //     title: "",
+      //     path: ""
+      //   }
+      // ],
       // href: location.href,
 
       house_detail: {
@@ -381,7 +407,6 @@ export default {
           simpleName: ""
         }
       },
-      property: [],
       banner_img: [],
 
       // 热门cate
@@ -390,13 +415,11 @@ export default {
       showPhone: false,
 
       // 猜你喜欢
-      like: [],
-      // 商户 id
-      merchant_id: "",
-
-      peripheral: []
+      like: []
     };
   },
+  // id变化刷新页面
+  watchQuery: ["id"],
   head() {
     return {
       title:
@@ -420,26 +443,6 @@ export default {
     };
   },
 
-  // metaInfo() {
-  //   return {
-  //     title:
-  //       this.house_detail.title &&
-  //       this.house_detail.title +
-  //         "-" +
-  //         this.house_detail.merchant.simpleName +
-  //         "-去海外网",
-  //     meta: [
-  //       {
-  //         name: "keywords",
-  //         content: this.house_detail.labels
-  //       },
-  //       {
-  //         name: "description",
-  //         content: `去海外网为您提供伦敦 ${this.house_detail.title}详细介绍、房价、户型、产权年限、周边设施、物业配套等信息，买海外房产，上去海外网`
-  //       }
-  //     ]
-  //   };
-  // },
   components: {
     Project,
     Picture,
@@ -464,16 +467,11 @@ export default {
       return this.$refs;
     }
   },
-  watch: {
-    $route(to) {
-      this.getDetailData();
-    }
-  },
 
   methods: {
     // 猜你喜欢
     you_like() {
-      this.$fetch(`/dhr/client/house/list`, {
+      fetch(`/dhr/client/house/list`, {
         limit: 4,
         page: 1
       }).then(res => {
@@ -549,7 +547,7 @@ export default {
           this.house_detail = res.Result;
           this.merchant_id = res.Result.merchant_id;
           console.log(this.house_detail);
-          this.type[1].title = this.house_detail.title;
+          // this.type[1].title = this.house_detail.title;
 
           this.property = JSON.parse(res.Result.property);
           if (res.Result.peripheral) {
@@ -569,8 +567,8 @@ export default {
   },
 
   created() {
-    this.you_like();
-    this.getDetailData();
+    // this.you_like();
+    // this.getDetailData();
   }
 };
 </script>

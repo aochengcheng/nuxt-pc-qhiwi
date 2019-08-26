@@ -109,7 +109,7 @@ export default {
           path: `/news`
         },
         {
-          title: content.name,
+          title:  content.name,
           path: ""
         }
       ]
@@ -135,7 +135,7 @@ export default {
           content: ""
         }
       ],
-      script: [{ type: "application/ld+json" }]
+      // script: [{ type: "application/ld+json" }]
     };
   },
   data() {

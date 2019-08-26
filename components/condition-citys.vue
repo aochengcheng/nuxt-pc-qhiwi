@@ -290,13 +290,15 @@ export default {
   .box {
     display: flex;
     flex-direction: column;
+
   }
   .country_wrap {
     float: left;
-    height: 40px;
+    // height: 40px;
     line-height: 40px;
     ul {
       display: flex;
+      flex-wrap: wrap;
       li {
         // font-weight: bold;
         padding: 0 10px;

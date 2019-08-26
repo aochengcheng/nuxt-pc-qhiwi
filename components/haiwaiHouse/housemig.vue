@@ -1,6 +1,6 @@
 <template>
   <div class>
-    <nuxt-link :to="{path:'/news/detail',query:{id:result_data.id}}">
+    <nuxt-link :to="{path:'/house/detail',query:{id:result_data.id}}">
       <div class="housemig">
         <div class="immig_left">
           <img v-lazy="result_data.coverImg" :key="result_data.id" :alt="result_data.name"/>

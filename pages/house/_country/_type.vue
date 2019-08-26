@@ -72,7 +72,7 @@
           <Housemig
             v-for="(item,i) in n_house_data"
             :result_data="item"
-            @click.native="jumpDetails(item.id)"
+            
             :key="i"
           ></Housemig>
 

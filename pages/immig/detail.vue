@@ -214,7 +214,6 @@ import { fetch } from "~/plugins/axios/http.js";
 export default {
   name: "immigDetail",
   mixins: [fixedNav, referer, getModelHot, setCountryMode],
-  async fetch({ store }) {},
   async asyncData(ctx) {
     const { ErrCode, Result } = await fetch(
       "/dhr/client/migrate/" + ctx.query.id
