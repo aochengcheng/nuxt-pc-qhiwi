@@ -1,0 +1,144 @@
+/*=======reset css========*/
+body,
+p,
+h1,
+h2,
+h3,
+h4,
+ul,
+li,
+dl,
+dd,
+dt,
+input,
+figure,
+div,
+header,
+nav,
+main,
+footer,
+section,
+article,
+aside,
+*::before,
+*::after {
+    /*所有的标签，和伪元素都选中*/
+    margin: 0;
+    padding: 0;
+    /*移动端常用布局是非固定像素*/
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    /*点击高亮效果的清除*/
+    tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html,body {
+    // scroll-behavior:smooth;
+    font-size: 12px;
+    font-family: "Microsoft YaHei", sans-serif;
+    color: #0D1C31;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+i,
+em {
+    font-style: normal;
+}
+
+input,
+textarea {
+    border: none;
+    outline: none;
+    /*不允许改变尺寸*/
+    resize: none;
+    /*元素的外观  none没有任何样式*/
+    -webkit-appearance: none;
+}
+
+hr {
+    border: none;
+   border-bottom: 1px solid #eee;
+}
+/*=======common css========*/
+.f_left {
+    float: left;
+}
+
+.f_right {
+    float: right;
+}
+
+.clearFix::before,
+.clearFix::after {
+    content: "";
+    display: block;
+    visibility: hidden;
+    height: 0;
+    line-height: 0;
+    clear: both;
+}
+img {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+
+
+
+/*分页样式*/
+.page {
+    width: 840px;
+    padding-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+// 1200px 尺寸
+.centered {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.flex{
+display: flex;
+}
+
+// 固定导航栏
+.toFixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    background: #fff;
+    width: 100%;
+  }
+
+  // 字体溢出省略
+  .text_overflow {
+    overflow: hidden;
+     text-overflow: ellipsis;
+      display: -webkit-box;
+     -webkit-line-clamp: 2;
+     -webkit-box-orient: vertical;
+  }
+  .text_one {
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap
+  }
+
+//   文字下划线
+  .hover_underline:hover {
+    //   text-decoration: underline;
+      cursor: pointer;
+  }
